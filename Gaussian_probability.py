@@ -47,20 +47,22 @@ def printProb():
     return prob
 
 
-def printProbInfo():
+def printProbInfo(num):
     prob = printProb()
-    for i in range(1, 15):
-        print("correct times = %d, prob = %.1f" % (i, prob[i] * 100))
-
-
-printProbInfo()
-
-
+    print("correct times = %d, prob = %.1f" % (num, prob[num] * 100),"%")
+    prob_cnt=0
+    for i in range(num):
+        prob_cnt += prob[i]
+    print("大于等于该次数的概率为：%.1f" % ((1 - prob_cnt) * 100), "%", end='\t')
+    print()
 def record_experiment():
-    str = input("请输入：");
-    correct = 1
-    note = "none"
-    timeNow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    dataframe = pd.DataFrame({'correct number': correct, 'note': note, "time": timeNow})
-    dataframe.to_csv("records.csv", mode='a', header=False, index=False, sep=',')
+    correct_num = int(input("input correct number?："))
+    note = input("any note?")
+    times = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    with open('records.csv', 'a') as csvfile:
+        writer = csv.writer(csvfile)
+        # writer.writerow(['correct number','note','time'])
+        writer.writerow([correct_num, note, times])
+    printProbInfo(correct_num)
+
 record_experiment()
