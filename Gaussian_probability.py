@@ -47,14 +47,24 @@ def printProb():
     return prob
 
 
+def show_all_prob():
+    prob = printProb()
+    prob_cnt = 0
+    for i in range(15):
+        prob_cnt += prob[i]
+        print("大于等于 %d 的概率为：%.1f" % (i+1,(1 - prob_cnt) * 100), "%")
+
+
 def printProbInfo(num):
     prob = printProb()
-    print("correct times = %d, prob = %.1f" % (num, prob[num] * 100),"%")
-    prob_cnt=0
+    print("correct times = %d, prob = %.1f" % (num, prob[num] * 100), "%")
+    prob_cnt = 0
     for i in range(num):
         prob_cnt += prob[i]
     print("大于等于该次数的概率为：%.1f" % ((1 - prob_cnt) * 100), "%", end='\t')
     print()
+
+
 def record_experiment():
     correct_num = int(input("input correct number?："))
     note = input("any note?")
@@ -65,4 +75,6 @@ def record_experiment():
         writer.writerow([correct_num, note, times])
     printProbInfo(correct_num)
 
+
 record_experiment()
+# show_all_prob()
